@@ -15,6 +15,7 @@
     .bg-strava { background-color: #FC4C02; }
     .border-strava { border-color: #FC4C02; }
     .leaflet-container { background: #0f172a !important; border-radius: 0.75rem; }
+    .leaflet-tile-pane { filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7); }
     .no-scrollbar::-webkit-scrollbar { display: none; }
   </style>
 </head>
@@ -742,7 +743,7 @@
         setTimeout(() => {
           if (modalMapInstance) modalMapInstance.remove();
           modalMapInstance = L.map('modalMap', { zoomControl: false, attributionControl: false });
-          L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(modalMapInstance);
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(modalMapInstance);
           const line = L.polyline(r.polyline, { color: '#FC4C02', weight: 4 }).addTo(modalMapInstance);
           modalMapInstance.fitBounds(line.getBounds(), { padding: [15, 15] });
         }, 120);
