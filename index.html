@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>RunSync Pro</title>
+  <title>RunSync Ultimate</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -16,7 +16,6 @@
     .bg-strava { background-color: #FC4C02; }
     .border-strava { border-color: #FC4C02; }
     .leaflet-container { background: #0b1120 !important; border-radius: 0.75rem; }
-    /* Kostenlose OpenStreetMap im edlen Strava Dark-Mode ohne API-Key! */
     .leaflet-tile-pane { filter: brightness(0.65) invert(1) contrast(2.8) hue-rotate(200deg) saturate(0.35) brightness(0.75); }
     .no-scrollbar::-webkit-scrollbar { display: none; }
   </style>
@@ -28,15 +27,11 @@
     <div class="max-w-sm mx-auto w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
       <div class="flex items-center gap-2">
         <div class="w-3.5 h-3.5 rounded-full bg-strava"></div>
-        <h2 class="text-lg font-bold">Run<span class="strava-orange">Sync</span> Pro Tresor</h2>
+        <h2 class="text-lg font-bold">Run<span class="strava-orange">Sync</span> Ultimate Tresor</h2>
       </div>
-      <p class="text-xs text-slate-400 leading-relaxed">
-        Bitte gib einmalig deinen privaten GitHub-Schlüssel (<code>ghp_...</code>) ein:
-      </p>
+      <p class="text-xs text-slate-400 leading-relaxed">Bitte gib deinen GitHub-Schlüssel (<code>ghp_...</code>) ein:</p>
       <input id="tokenInput" type="password" placeholder="ghp_..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500" />
-      <button onclick="saveToken()" class="w-full bg-strava text-white font-bold py-2.5 rounded-xl text-sm transition">
-        🔒 Tresor entsperren
-      </button>
+      <button onclick="saveToken()" class="w-full bg-strava text-white font-bold py-2.5 rounded-xl text-sm transition">🔒 Tresor entsperren</button>
     </div>
   </div>
 
@@ -47,15 +42,9 @@
       <h1 class="text-lg font-extrabold tracking-tight">Run<span class="strava-orange">Sync</span> <span class="text-[10px] bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded font-bold uppercase ml-1">Ultimate</span></h1>
     </div>
     <div class="flex items-center gap-1.5">
-      <button onclick="triggerLiveGarminSync()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold px-2.5 py-1.5 rounded-lg border border-slate-700 transition">
-        ⚡ Garmin Sync
-      </button>
-      <button onclick="loadData()" class="bg-strava text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition">
-        🔄
-      </button>
-      <button onclick="logoutToken()" class="bg-slate-900 text-slate-400 text-xs px-2 py-1.5 rounded-lg border border-slate-800">
-        🔒
-      </button>
+      <button onclick="triggerLiveGarminSync()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold px-2.5 py-1.5 rounded-lg border border-slate-700">⚡ Garmin Sync</button>
+      <button onclick="loadData()" class="bg-strava text-white text-xs font-bold px-2.5 py-1.5 rounded-lg">🔄</button>
+      <button onclick="logoutToken()" class="bg-slate-900 text-slate-400 text-xs px-2 py-1.5 rounded-lg border border-slate-800">🔒</button>
     </div>
   </header>
 
@@ -69,21 +58,18 @@
 
   <!-- ==================== TAB 1: COACH & RECOVERY ==================== -->
   <main id="tab-coach" class="max-w-md mx-auto px-4 pt-4 space-y-4">
-
-    <!-- Optionales Event-Banner (falls Wettkampf-Plan aktiv) -->
     <div id="activeEventBanner" onclick="switchTab('plan')" class="bg-gradient-to-r from-orange-600/25 to-slate-900 border border-orange-500/40 rounded-2xl p-3.5 flex justify-between items-center cursor-pointer hidden">
       <div>
-        <div class="text-[10px] uppercase font-extrabold text-orange-400 tracking-wider">🎯 Aktiver Trainingsplan</div>
-        <div id="bannerEventTitle" class="text-sm font-black text-white mt-0.5">10k Wettkampf</div>
-        <div id="bannerEventSub" class="text-[11px] text-slate-300">Phase: Spezifischer Aufbau</div>
+        <div class="text-[10px] uppercase font-extrabold text-orange-400 tracking-wider">🎯 Aktiver Wettkampf-Plan (3 Tage/Woche)</div>
+        <div id="bannerEventTitle" class="text-sm font-black text-white mt-0.5">10k Event</div>
+        <div id="bannerEventSub" class="text-[11px] text-slate-300">Phase: Aufbau & Tapering</div>
       </div>
       <div class="text-right">
         <div id="bannerCountdown" class="text-lg font-black text-orange-400">-- Tage</div>
-        <div class="text-[10px] text-slate-400">Zum Wochenplan →</div>
+        <div class="text-[10px] text-slate-400">Zum Plan →</div>
       </div>
     </div>
 
-    <!-- Readiness Hero Card -->
     <section class="bg-[#111827] border border-slate-800 rounded-2xl p-5 shadow-lg">
       <div class="flex items-center justify-between gap-4">
         <div class="relative w-24 h-24 flex items-center justify-center shrink-0">
@@ -97,14 +83,13 @@
           </div>
         </div>
         <div class="flex-1">
-          <span id="coachStatusBadge" class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded bg-orange-500/20 text-orange-400">10k Tages-Coach</span>
+          <span id="coachStatusBadge" class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded bg-orange-500/20 text-orange-400">Tages-Coach</span>
           <h2 id="coachTitle" class="text-base font-extrabold text-white mt-1.5 leading-snug">Lade Status...</h2>
           <p id="coachReason" class="text-xs text-slate-400 mt-1 leading-relaxed">Analysiere Schlaf, HRV und Ruhepuls...</p>
         </div>
       </div>
     </section>
 
-    <!-- 6 Garmin Gesundheits- & Alltags-Kacheln -->
     <section class="grid grid-cols-3 gap-2">
       <div class="bg-[#111827] border border-slate-800 rounded-xl p-3">
         <div class="text-[10px] text-slate-400">🌙 Sleep Score</div>
@@ -134,57 +119,50 @@
       <div class="bg-[#111827] border border-slate-800 rounded-xl p-3">
         <div class="text-[10px] text-slate-400">👣 Schritte</div>
         <div id="valSteps" class="text-lg font-black text-teal-400 mt-0.5">--</div>
-        <div class="text-[10px] text-slate-500">Heute / Vortag</div>
+        <div class="text-[10px] text-slate-500">Heute</div>
       </div>
     </section>
 
-    <!-- 3 Workouts -->
     <section class="space-y-2.5 pt-1">
       <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-1">Heutige Workout-Optionen (Uhr-Export)</h3>
       <div id="workoutsContainer" class="space-y-2.5"></div>
     </section>
-
   </main>
 
-  <!-- ==================== TAB 2: AKTIVITÄTEN (STRAVA FEED & SUCHE) ==================== -->
+  <!-- ==================== TAB 2: AKTIVITÄTEN ==================== -->
   <main id="tab-activities" class="max-w-md mx-auto px-4 pt-4 space-y-4 hidden">
     <div class="relative">
-      <input id="searchInput" oninput="filterActivities()" type="text" placeholder="🔍 Suchen nach Titel, Notiz, Schuh, Gefühl oder Datum..." class="w-full bg-[#111827] border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500" />
+      <input id="searchInput" oninput="filterActivities()" type="text" placeholder="🔍 Suchen nach Titel, Notiz, Schuh oder Datum..." class="w-full bg-[#111827] border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500" />
     </div>
-
     <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
       <button onclick="setCategoryFilter('ALL')" id="flt-ALL" class="flt-btn bg-strava text-white text-xs font-bold px-3.5 py-1.5 rounded-full shrink-0">Alle Läufe</button>
-      <button onclick="setCategoryFilter('Intervalle')" id="flt-Intervalle" class="flt-btn bg-[#111827] border border-slate-800 text-slate-300 text-xs font-semibold px-3.5 py-1.5 rounded-full shrink-0">🔥 Intervalle & Tempo</button>
+      <button onclick="setCategoryFilter('Intervalle')" id="flt-Intervalle" class="flt-btn bg-[#111827] border border-slate-800 text-slate-300 text-xs font-semibold px-3.5 py-1.5 rounded-full shrink-0">🔥 Intervalle</button>
       <button onclick="setCategoryFilter('Zone 2')" id="flt-Zone 2" class="flt-btn bg-[#111827] border border-slate-800 text-slate-300 text-xs font-semibold px-3.5 py-1.5 rounded-full shrink-0">💚 Zone 2 Base</button>
       <button onclick="setCategoryFilter('Longrun')" id="flt-Longrun" class="flt-btn bg-[#111827] border border-slate-800 text-slate-300 text-xs font-semibold px-3.5 py-1.5 rounded-full shrink-0">🛣️ Longruns</button>
     </div>
-
     <div id="activitiesFeed" class="space-y-3.5"></div>
   </main>
 
-  <!-- ==================== TAB 3: ADAPTIVER WETTKAMPF-TRAININGSPLANER (OPTIONAL) ==================== -->
+  <!-- ==================== TAB 3: ADAPTIVER PLANER & SPLIT-RECHNER ==================== -->
   <main id="tab-plan" class="max-w-md mx-auto px-4 pt-4 space-y-4 hidden">
     <section class="bg-[#111827] border border-slate-800 rounded-2xl p-5 space-y-4">
       <div class="flex justify-between items-center">
         <div>
           <span class="text-[10px] uppercase font-extrabold text-orange-400 tracking-wider">Smart Coach</span>
-          <h2 class="text-base font-black text-white">🎯 Adaptiver Event-Trainingsplan</h2>
+          <h2 class="text-base font-black text-white">🎯 3-Tage Event-Planer & Tapering</h2>
         </div>
         <label class="flex items-center gap-2 cursor-pointer">
           <span class="text-xs text-slate-400 font-semibold">Aktiv</span>
-          <input id="planActiveToggle" type="checkbox" onchange="togglePlanActive()" class="w-4 h-4 accent-orange-500 rounded" />
+          <input id="planActiveToggle" type="checkbox" onchange="saveTrainingPlan()" class="w-4 h-4 accent-orange-500 rounded" />
         </label>
       </div>
-
       <p class="text-xs text-slate-400 leading-relaxed">
-        Trage optional ein bevorstehendes Lauf-Event ein. Der Planer berechnet automatisch deine Trainingsphase (Aufbau, Peak, Tapering) und **passt die Einheiten täglich live an deine Garmin-Readiness (Schlaf, HRV, Ruhepuls)** an!
+        Perfekt für den Familienalltag: 3 hocheffiziente Läufe pro Woche, automatische Tapering-Phase vor dem Event und Live-Adaption an deine Garmin-Readiness!
       </p>
-
-      <!-- Event Konfiguration -->
       <div class="grid grid-cols-2 gap-2.5 pt-1">
         <div class="col-span-2">
-          <label class="text-[11px] text-slate-400 font-semibold block mb-1">Name des Lauf-Events</label>
-          <input id="planEventName" type="text" placeholder="z.B. Münchner Stadtlauf 10k" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white" />
+          <label class="text-[11px] text-slate-400 font-semibold block mb-1">Event-Name</label>
+          <input id="planEventName" type="text" placeholder="z.B. Stadtlauf 10k" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white" />
         </div>
         <div>
           <label class="text-[11px] text-slate-400 font-semibold block mb-1">Distanz</label>
@@ -195,29 +173,18 @@
           </select>
         </div>
         <div>
-          <label class="text-[11px] text-slate-400 font-semibold block mb-1">Wettkampf-Datum</label>
+          <label class="text-[11px] text-slate-400 font-semibold block mb-1">Datum</label>
           <input id="planDate" type="date" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white" />
         </div>
-        <div>
-          <label class="text-[11px] text-slate-400 font-semibold block mb-1">Zielzeit (mm:ss / hh:mm:ss)</label>
-          <input id="planTargetTime" type="text" placeholder="43:30" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white" />
-        </div>
-        <div>
-          <label class="text-[11px] text-slate-400 font-semibold block mb-1">Laufeinheiten / Woche</label>
-          <select id="planDaysPerWeek" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white">
-            <option value="3">3 Läufe pro Woche</option>
-            <option value="4" selected>4 Läufe pro Woche</option>
-            <option value="5">5 Läufe pro Woche</option>
-          </select>
+        <div class="col-span-2">
+          <label class="text-[11px] text-slate-400 font-semibold block mb-1">Zielzeit (mm:ss)</label>
+          <input id="planTargetTime" type="text" placeholder="44:00" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white" />
         </div>
       </div>
-
-      <button onclick="saveTrainingPlan()" class="w-full bg-strava hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-xs transition">
-        💾 Trainingsplan berechnen & speichern
-      </button>
+      <button onclick="saveTrainingPlan()" class="w-full bg-strava hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-xs transition">💾 Plan & Split-Tabelle berechnen</button>
     </section>
 
-    <!-- Adaptiver Wochenplan Output -->
+    <!-- Adaptiver Plan & Split-Rechner Output -->
     <section id="generatedPlanSection" class="space-y-3 hidden">
       <div class="bg-[#111827] border border-slate-800 rounded-2xl p-4 space-y-2">
         <div class="flex justify-between items-center">
@@ -227,14 +194,32 @@
         <p id="planAdaptationNote" class="text-xs text-slate-300 leading-relaxed"></p>
       </div>
 
-      <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-1">📅 Dein adaptiver 7-Tage-Wochenplan</h3>
+      <!-- Wettkampf / Training Split-Rechner -->
+      <div class="bg-[#111827] border border-slate-800 rounded-2xl p-4 space-y-2">
+        <h3 class="text-xs font-extrabold uppercase tracking-wider text-orange-400">⏱️ Wettkampf & Trainings-Split-Tabelle</h3>
+        <p class="text-[11px] text-slate-400">Deine exakten Kilometer-Zwischenzeiten für die Zielzeit:</p>
+        <div id="splitTableContainer" class="grid grid-cols-2 gap-1.5 pt-1 text-xs"></div>
+      </div>
+
+      <!-- Core & Mobility Inspiration -->
+      <div class="bg-[#111827] border border-slate-800 rounded-2xl p-4 space-y-2">
+        <h3 class="text-xs font-extrabold uppercase tracking-wider text-teal-400">🧘‍♂️ Core & Mobility (Familien-kompatibel)</h3>
+        <p class="text-[11px] text-slate-300 leading-relaxed">
+          <b>1x Woche 10 Min. Wohnzimmer-Core:</b><br>
+          • 3x 45 Sek. Plank (Unterarmstütz)<br>
+          • 3x 30 Sek. Side Plank pro Seite<br>
+          • 3x 12 Wdh. Dead Bugs (Tote Käfer)<br>
+          <i>Vor jedem Intervall:</i> 5 Min. Kniehebelauf & Hüftöffner.
+        </p>
+      </div>
+
+      <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-1 pt-1">📅 Deine 3 flexiblen Einheiten diese Woche</h3>
       <div id="weeklyScheduleContainer" class="space-y-2.5"></div>
     </section>
   </main>
 
-  <!-- ==================== TAB 4: ANALYSE, REKORDE & EFFIZIENZ ==================== -->
+  <!-- ==================== TAB 4: ANALYSE & REKORDE ==================== -->
   <main id="tab-analytics" class="max-w-md mx-auto px-4 pt-4 space-y-4 hidden">
-    <!-- Wochen- & Monats-Umfang -->
     <section class="bg-[#111827] border border-slate-800 rounded-2xl p-5">
       <div class="flex justify-between items-baseline mb-2">
         <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Wochen- & Monats-Umfang</span>
@@ -243,7 +228,7 @@
       <div class="flex justify-between items-baseline mb-3">
         <div>
           <span id="wkKmVal" class="text-3xl font-black text-white">0.0</span>
-          <span class="text-xs text-slate-400"> / 35 km Woche</span>
+          <span class="text-xs text-slate-400"> / 30 km Woche</span>
         </div>
         <div class="text-right">
           <span class="text-[11px] text-slate-400">Monat: </span>
@@ -255,12 +240,11 @@
       </div>
     </section>
 
-    <!-- 🏆 Persönliche Bestleistungen (Strava PR Board) -->
     <section class="bg-[#111827] border border-slate-800 rounded-2xl p-5">
-      <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">🏆 Bestleistungen & VO2max Prognose</h3>
+      <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">🏆 Bestleistungen & VO2max</h3>
       <div class="grid grid-cols-3 gap-2.5 mb-3 text-center">
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5">
-          <div class="text-[10px] text-slate-400">Schnellster 1k Split</div>
+          <div class="text-[10px] text-slate-400">Schnellster 1k</div>
           <div id="rec1k" class="text-base font-black text-amber-400 mt-0.5">-- /km</div>
         </div>
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5">
@@ -272,7 +256,6 @@
           <div id="recLongest" class="text-base font-black text-emerald-400 mt-0.5">-- km</div>
         </div>
       </div>
-
       <div class="grid grid-cols-2 gap-3 items-center pt-2 border-t border-slate-800/80">
         <div class="bg-sky-500/10 border border-sky-500/30 rounded-xl p-3.5 text-center">
           <div class="text-[11px] text-sky-300 font-semibold">Garmin VO2max</div>
@@ -281,56 +264,46 @@
         </div>
         <div class="space-y-1.5 text-xs">
           <div class="flex justify-between bg-slate-900/90 px-3 py-1.5 rounded-lg border border-slate-800">
-            <span class="text-slate-400">5 km Prognose:</span>
+            <span class="text-slate-400">5k:</span>
             <span id="pred5k" class="font-bold text-white">21:10</span>
           </div>
           <div class="flex justify-between bg-orange-500/15 px-3 py-1.5 rounded-lg border border-orange-500/40">
-            <span class="text-orange-300 font-semibold">10 km Prognose:</span>
+            <span class="text-orange-300 font-semibold">10k Ziel:</span>
             <span id="pred10k" class="font-black text-orange-400">44:15</span>
           </div>
           <div class="flex justify-between bg-slate-900/90 px-3 py-1.5 rounded-lg border border-slate-800">
-            <span class="text-slate-400">Halbmarathon:</span>
+            <span class="text-slate-400">HM:</span>
             <span id="predHm" class="font-bold text-white">1:38:30</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Aerobe Effizienz Trend (Meter pro Herzschlag) -->
     <section class="bg-[#111827] border border-slate-800 rounded-2xl p-5">
-      <div class="flex justify-between items-center mb-1">
-        <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400">🔬 Aerobe Effizienz (Zone-2 Fortschritt)</h3>
-        <span class="text-[10px] text-emerald-400 font-bold">Meter / Herzschlag</span>
-      </div>
-      <p class="text-[11px] text-slate-400 mb-3">Steigt dieser Wert über Wochen an, läufst du bei gleichem Puls schneller:</p>
+      <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2">🔬 Aerobe Effizienz (Zone-2 Fortschritt)</h3>
       <div id="efficiencyList" class="space-y-2 text-xs"></div>
     </section>
 
-    <!-- 7-Tage Erholungs-Trend -->
     <section class="bg-[#111827] border border-slate-800 rounded-2xl p-5">
       <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">7-Tage Schlaf, HRV & Ruhepuls</h3>
       <div id="recoveryTrendList" class="space-y-2 text-xs"></div>
     </section>
   </main>
 
-  <!-- ==================== TAB 5: SCHUH-TRACKER ==================== -->
+  <!-- ==================== TAB 5: SCHUHE ==================== -->
   <main id="tab-shoes" class="max-w-md mx-auto px-4 pt-4 space-y-4 hidden">
     <section class="bg-[#111827] border border-slate-800 rounded-2xl p-5 space-y-4">
       <div>
-        <h3 class="text-sm font-extrabold text-white">👟 Deine Laufschuh-Rotation</h3>
-        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-          Hier zählen alle Läufe rein, bei denen du den Schuh manuell in der Aktivität ausgewählt hast (plus deine eingetragenen Vor-Kilometer):
-        </p>
+        <h3 class="text-sm font-extrabold text-white">👟 Laufschuh-Rotation</h3>
+        <p class="text-xs text-slate-400 mt-1">Adidas Adizero Evo SL & New Balance 1080 v15:</p>
       </div>
       <div id="shoesContainer" class="space-y-4"></div>
     </section>
   </main>
 
-  <!-- ==================== STRAVA-PREMIUM DETAIL & EDIT MODAL ==================== -->
+  <!-- ==================== DETAIL & EDIT MODAL ==================== -->
   <div id="activityModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex flex-col justify-end">
     <div class="bg-[#0f1523] border-t border-slate-800 rounded-t-3xl max-h-[92vh] overflow-y-auto px-5 pt-4 pb-12 space-y-4 max-w-md mx-auto w-full">
-
-      <!-- Modal Header -->
       <div class="flex justify-between items-start sticky top-0 bg-[#0f1523] py-2.5 z-20 border-b border-slate-800/80">
         <div class="pr-2">
           <div class="flex items-center gap-2">
@@ -341,68 +314,58 @@
           <div id="modMeta" class="text-xs text-slate-400 mt-0.5">Datum • Schuh</div>
         </div>
         <div class="flex items-center gap-2 shrink-0">
-          <button onclick="toggleEditPanel()" class="bg-slate-800 hover:bg-slate-700 text-orange-400 border border-slate-700 text-xs font-bold px-3 py-1.5 rounded-xl">
-            ✎ Bearbeiten
-          </button>
+          <button onclick="toggleEditPanel()" class="bg-slate-800 text-orange-400 border border-slate-700 text-xs font-bold px-3 py-1.5 rounded-xl">✎ Bearbeiten</button>
           <button onclick="closeModal()" class="bg-slate-800 text-slate-300 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">✕</button>
         </div>
       </div>
 
-      <!-- ✎ STRAVA EDIT PANEL -->
       <div id="editPanel" class="bg-[#111827] border border-orange-500/50 rounded-2xl p-4 space-y-3.5 hidden">
         <div class="text-xs font-extrabold uppercase tracking-wider text-orange-400">✎ Aktivität anpassen</div>
         <div>
-          <label class="text-[11px] text-slate-400 font-semibold block mb-1">Titel der Aktivität</label>
+          <label class="text-[11px] text-slate-400 font-semibold block mb-1">Titel</label>
           <input id="editTitleInput" type="text" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white" />
         </div>
         <div>
-          <label class="text-[11px] text-slate-400 font-semibold block mb-1">👟 Getragener Laufschuh (manuelle Auswahl)</label>
+          <label class="text-[11px] text-slate-400 font-semibold block mb-1">👟 Schuh</label>
           <select id="editShoeSelect" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-            <option value="">-- Kein Schuh ausgewählt --</option>
+            <option value="">-- Kein Schuh --</option>
             <option value="Adidas Adizero Evo SL">Adidas Adizero Evo SL</option>
             <option value="New Balance 1080 v15">New Balance 1080 v15</option>
           </select>
         </div>
         <div>
-          <label class="text-[11px] text-slate-400 font-semibold block mb-1">😊 Wie hast du dich gefühlt? (Optional)</label>
+          <label class="text-[11px] text-slate-400 font-semibold block mb-1">😊 Gefühl</label>
           <div class="grid grid-cols-5 gap-1.5">
             <button type="button" onclick="selectFeeling('🔥 Stark')" data-feel="🔥 Stark" class="feel-btn bg-slate-950 border border-slate-800 rounded-xl py-2 text-center text-[11px] text-slate-300">🔥<br>Stark</button>
             <button type="button" onclick="selectFeeling('🙂 Gut')" data-feel="🙂 Gut" class="feel-btn bg-slate-950 border border-slate-800 rounded-xl py-2 text-center text-[11px] text-slate-300">🙂<br>Gut</button>
             <button type="button" onclick="selectFeeling('😐 Normal')" data-feel="😐 Normal" class="feel-btn bg-slate-950 border border-slate-800 rounded-xl py-2 text-center text-[11px] text-slate-300">😐<br>Normal</button>
             <button type="button" onclick="selectFeeling('😮‍💨 Schwer')" data-feel="😮‍💨 Schwer" class="feel-btn bg-slate-950 border border-slate-800 rounded-xl py-2 text-center text-[11px] text-slate-300">😮‍💨<br>Schwer</button>
-            <button type="button" onclick="selectFeeling('🥵 Erschöpft')" data-feel="🥵 Erschöpft" class="feel-btn bg-slate-950 border border-slate-800 rounded-xl py-2 text-center text-[11px] text-slate-300">🥵<br>Platt</button>
+            <button type="button" onclick="selectFeeling('🥵 Platt')" data-feel="🥵 Platt" class="feel-btn bg-slate-950 border border-slate-800 rounded-xl py-2 text-center text-[11px] text-slate-300">🥵<br>Platt</button>
           </div>
         </div>
         <div>
           <div class="flex justify-between text-[11px] text-slate-400 font-semibold mb-1">
-            <span>💪 Empfundene Anstrengung (RPE 1–10)</span>
-            <span id="rpeLabel" class="text-orange-400 font-bold">Nicht angegeben</span>
+            <span>💪 RPE (1–10)</span>
+            <span id="rpeLabel" class="text-orange-400 font-bold">0</span>
           </div>
           <input id="editRpeInput" type="range" min="0" max="10" step="1" value="0" oninput="updateRpeLabel(this.value)" class="w-full accent-orange-500" />
         </div>
         <div>
-          <label class="text-[11px] text-slate-400 font-semibold block mb-1">📝 Notizen & Infos zum Lauf (Optional)</label>
-          <textarea id="editNotesInput" rows="3" placeholder="Wie lief es? Wetter, Beine, Intervalle..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+          <label class="text-[11px] text-slate-400 font-semibold block mb-1">📝 Notizen</label>
+          <textarea id="editNotesInput" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></textarea>
         </div>
         <div class="flex gap-2 pt-1">
-          <button onclick="saveActivityMeta()" id="saveMetaBtn" class="flex-1 bg-strava text-white font-bold py-2.5 rounded-xl text-xs">
-            💾 Änderungen speichern
-          </button>
-          <button onclick="toggleEditPanel()" class="bg-slate-800 text-slate-300 font-semibold px-4 py-2.5 rounded-xl text-xs">
-            Abbrechen
-          </button>
+          <button onclick="saveActivityMeta()" id="saveMetaBtn" class="flex-1 bg-strava text-white font-bold py-2.5 rounded-xl text-xs">💾 Speichern</button>
+          <button onclick="toggleEditPanel()" class="bg-slate-800 text-slate-300 px-4 py-2.5 rounded-xl text-xs">Abbrechen</button>
         </div>
       </div>
 
-      <!-- Persönliche Notiz-Box -->
       <div id="modNotesBox" class="bg-[#111827] border-l-4 border-strava rounded-r-xl p-3.5 text-xs text-slate-200 leading-relaxed hidden"></div>
 
-      <!-- 🗺️ GPS Streckenkarte (Dark Mode OpenStreetMap ohne API-Key!) -->
       <div id="modalMapWrapper" class="w-full h-56 rounded-xl overflow-hidden border border-slate-800 relative">
         <div id="modalMap" class="w-full h-full"></div>
       </div>
 
-      <!-- 9 Garmin & Strava Pro Metriken -->
       <div class="grid grid-cols-3 gap-2 text-center">
         <div class="bg-[#111827] border border-slate-800 rounded-xl p-2.5">
           <div class="text-[10px] text-slate-400">Distanz</div>
@@ -417,7 +380,7 @@
           <div id="modDur" class="text-base font-black text-white">--</div>
         </div>
         <div class="bg-[#111827] border border-slate-800 rounded-xl p-2.5">
-          <div class="text-[10px] text-slate-400">Puls (⌀ / Max)</div>
+          <div class="text-[10px] text-slate-400">Puls (⌀/Max)</div>
           <div id="modHR" class="text-xs font-bold text-rose-400 mt-0.5">-- / --</div>
         </div>
         <div class="bg-[#111827] border border-slate-800 rounded-xl p-2.5">
@@ -428,37 +391,20 @@
           <div class="text-[10px] text-slate-400">Training Effect</div>
           <div id="modTE" class="text-xs font-bold text-emerald-400 mt-0.5">--</div>
         </div>
-        <div class="bg-[#111827] border border-slate-800 rounded-xl p-2.5">
-          <div class="text-[10px] text-slate-400">Belastung / Kal.</div>
-          <div id="modLoad" class="text-xs font-bold text-amber-400 mt-0.5">--</div>
-        </div>
-        <div class="bg-[#111827] border border-slate-800 rounded-xl p-2.5">
-          <div class="text-[10px] text-slate-400">Effizienz</div>
-          <div id="modEff" class="text-xs font-bold text-teal-400 mt-0.5">-- m/♥</div>
-        </div>
-        <div class="bg-[#111827] border border-slate-800 rounded-xl p-2.5">
-          <div class="text-[10px] text-slate-400">Höhenmeter</div>
-          <div id="modElev" class="text-xs font-bold text-slate-200 mt-0.5">+-- m</div>
-        </div>
       </div>
 
-      <!-- 📈 Interaktive Pace- & Herzfrequenz-Kurve (Strava Stream Graph) -->
       <div class="bg-[#111827] border border-slate-800 rounded-2xl p-4">
-        <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2">📈 Pace- & Herzfrequenz-Verlauf</h4>
-        <div class="h-44 w-full">
-          <canvas id="splitsChart"></canvas>
-        </div>
+        <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2">📈 Pace & HF-Verlauf</h4>
+        <div class="h-40 w-full"><canvas id="splitsChart"></canvas></div>
       </div>
 
-      <!-- Kilometer-Splits / Intervalle -->
       <div class="bg-[#111827] border border-slate-800 rounded-2xl p-4">
-        <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">⏱️ Splits & Runden (Strava Analyse)</h4>
+        <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">⏱️ Splits & Runden</h4>
         <div id="modSplits" class="space-y-2 text-xs"></div>
       </div>
 
-      <!-- 5 Herzfrequenz-Zonen -->
       <div class="bg-[#111827] border border-slate-800 rounded-2xl p-4">
-        <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">❤️ Zeit in den 5 Herzfrequenz-Zonen</h4>
+        <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">❤️ Herzfrequenz-Zonen</h4>
         <div id="modZones" class="space-y-2.5 text-xs"></div>
       </div>
     </div>
@@ -468,24 +414,19 @@
   <nav class="fixed bottom-0 inset-x-0 bg-[#0f1523]/95 backdrop-blur border-t border-slate-800 z-40 pb-safe">
     <div class="max-w-md mx-auto grid grid-cols-5 py-2">
       <button onclick="switchTab('coach')" id="nav-coach" class="flex flex-col items-center py-1 strava-orange font-bold">
-        <span class="text-base">🏠</span>
-        <span class="text-[10px] mt-0.5">Coach</span>
+        <span class="text-base">🏠</span><span class="text-[10px] mt-0.5">Coach</span>
       </button>
       <button onclick="switchTab('activities')" id="nav-activities" class="flex flex-col items-center py-1 text-slate-400 font-medium">
-        <span class="text-base">🏃‍♂️</span>
-        <span class="text-[10px] mt-0.5">Läufe</span>
+        <span class="text-base">🏃‍♂️</span><span class="text-[10px] mt-0.5">Läufe</span>
       </button>
       <button onclick="switchTab('plan')" id="nav-plan" class="flex flex-col items-center py-1 text-slate-400 font-medium">
-        <span class="text-base">🎯</span>
-        <span class="text-[10px] mt-0.5">Planer</span>
+        <span class="text-base">🎯</span><span class="text-[10px] mt-0.5">Planer</span>
       </button>
       <button onclick="switchTab('analytics')" id="nav-analytics" class="flex flex-col items-center py-1 text-slate-400 font-medium">
-        <span class="text-base">📊</span>
-        <span class="text-[10px] mt-0.5">Analyse</span>
+        <span class="text-base">📊</span><span class="text-[10px] mt-0.5">Analyse</span>
       </button>
       <button onclick="switchTab('shoes')" id="nav-shoes" class="flex flex-col items-center py-1 text-slate-400 font-medium">
-        <span class="text-base">👟</span>
-        <span class="text-[10px] mt-0.5">Schuhe</span>
+        <span class="text-base">👟</span><span class="text-[10px] mt-0.5">Schuhe</span>
       </button>
     </div>
   </nav>
@@ -501,10 +442,7 @@
     let modalMapInstance = null;
     let splitsChartInstance = null;
 
-    function getRunKey(r) {
-      return String(r.id || `${r.date}_${r.distance_km}`);
-    }
-
+    function getRunKey(r) { return String(r.id || `${r.date}_${r.distance_km}`); }
     function getRunCustom(r) {
       const m = userMeta[getRunKey(r)] || {};
       return {
@@ -520,29 +458,16 @@
       ['coach', 'activities', 'plan', 'analytics', 'shoes'].forEach(t => {
         document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
         const nav = document.getElementById('nav-' + t);
-        if (t === tab) {
-          nav.classList.add('strava-orange', 'font-bold');
-          nav.classList.remove('text-slate-400');
-        } else {
-          nav.classList.remove('strava-orange', 'font-bold');
-          nav.classList.add('text-slate-400');
-        }
+        if (t === tab) { nav.classList.add('strava-orange', 'font-bold'); nav.classList.remove('text-slate-400'); }
+        else { nav.classList.remove('strava-orange', 'font-bold'); nav.classList.add('text-slate-400'); }
       });
     }
 
     function saveToken() {
       const val = document.getElementById('tokenInput').value.trim();
-      if (val) {
-        localStorage.setItem('runsync_pat', val);
-        document.getElementById('lockScreen').classList.add('hidden');
-        loadData();
-      }
+      if (val) { localStorage.setItem('runsync_pat', val); document.getElementById('lockScreen').classList.add('hidden'); loadData(); }
     }
-
-    function logoutToken() {
-      localStorage.removeItem('runsync_pat');
-      document.getElementById('lockScreen').classList.remove('hidden');
-    }
+    function logoutToken() { localStorage.removeItem('runsync_pat'); document.getElementById('lockScreen').classList.add('hidden'); }
 
     async function loadUserMetaFromCloud(token) {
       try {
@@ -552,8 +477,7 @@
         if (res.ok) {
           const fileObj = await res.json();
           userMetaSha = fileObj.sha;
-          const decoded = decodeURIComponent(escape(atob(fileObj.content.replace(/\n/g, ''))));
-          userMeta = JSON.parse(decoded);
+          userMeta = JSON.parse(decodeURIComponent(escape(atob(fileObj.content.replace(/\n/g, '')))));
           localStorage.setItem('runsync_user_meta', JSON.stringify(userMeta));
         }
       } catch (e) {}
@@ -566,58 +490,31 @@
         const contentB64 = btoa(unescape(encodeURIComponent(JSON.stringify(userMeta, null, 2))));
         const body = { message: 'Update user meta & plan', content: contentB64 };
         if (userMetaSha) body.sha = userMetaSha;
-
         const res = await fetch(`https://api.github.com/repos/${REPO}/contents/user_meta.json`, {
           method: 'PUT',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
         });
-        if (res.ok) {
-          const d = await res.json();
-          userMetaSha = d.content.sha;
-        }
+        if (res.ok) { const d = await res.json(); userMetaSha = d.content.sha; }
       } catch (e) {}
     }
 
     async function loadData() {
       const token = localStorage.getItem('runsync_pat');
-      if (!token) {
-        document.getElementById('lockScreen').classList.remove('hidden');
-        return;
-      }
-
+      if (!token) { document.getElementById('lockScreen').classList.remove('hidden'); return; }
       const banner = document.getElementById('statusBanner');
-      banner.firstElementChild.innerText = '⏳ Lade Daten aus privatem Tresor...';
-
+      banner.firstElementChild.innerText = '⏳ Lade Daten aus Tresor...';
       try {
         await loadUserMetaFromCloud(token);
-
         const res = await fetch(`https://api.github.com/repos/${REPO}/contents/data.json?t=${Date.now()}`, {
           headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3.raw' }
         });
-
-        if (!res.ok) {
-          banner.firstElementChild.innerText = '❌ Schlüssel prüfen oder Sync starten';
-          if (res.status === 401) document.getElementById('lockScreen').classList.remove('hidden');
-          return;
-        }
-
+        if (!res.ok) { if (res.status === 401) document.getElementById('lockScreen').classList.remove('hidden'); return; }
         appData = await res.json();
-        banner.firstElementChild.innerText = '🔒 Privat synchronisiert mit Garmin Connect';
+        banner.firstElementChild.innerText = '🔒 Synchronisiert mit Garmin';
         document.getElementById('syncDate').innerText = appData.last_sync || '';
-
-        renderCoachTab();
-        renderActivitiesTab();
-        renderPlanTab();
-        renderAnalyticsTab();
-        renderShoesTab();
-      } catch (e) {
-        banner.firstElementChild.innerText = '⚠️ Fehler beim Laden der Tresor-Daten.';
-      }
+        renderCoachTab(); renderActivitiesTab(); renderPlanTab(); renderAnalyticsTab(); renderShoesTab();
+      } catch (e) { banner.firstElementChild.innerText = '⚠️ Fehler beim Laden.'; }
     }
 
     function renderCoachTab() {
@@ -627,27 +524,24 @@
       const ring = document.getElementById('readinessRing');
       ring.setAttribute('stroke-dasharray', `${c.readiness}, 100`);
       ring.style.color = c.color || '#22c55e';
-
       document.getElementById('coachTitle').innerText = c.title;
       document.getElementById('coachReason').innerText = c.reason;
-      document.getElementById('coachStatusBadge').innerText = c.trained_today ? 'Heute erledigt • Vorschau Morgen' : 'Heutiger 10k Tages-Coach';
 
       if (appData.recovery && appData.recovery.length > 0) {
         const today = appData.recovery[appData.recovery.length - 1];
         document.getElementById('valSleep').innerText = today.sleep_score;
-        document.getElementById('valSleepHrs').innerText = `${today.sleep_hours}h (Tief ${today.deep_hours || '--'}h)`;
+        document.getElementById('valSleepHrs').innerText = `${today.sleep_hours}h`;
         document.getElementById('valHRV').innerText = (today.hrv || 64) + ' ms';
         document.getElementById('valHRVStatus').innerText = today.hrv_status || 'Ausgewogen';
         document.getElementById('valRHR').innerText = today.resting_hr + ' bpm';
-        document.getElementById('valRHRAvg').innerText = `7d ⌀ ${c.avg_rhr || 48} bpm`;
+        document.getElementById('valRHRAvg').innerText = `⌀ ${c.avg_rhr || 48} bpm`;
         document.getElementById('valBB').innerText = today.body_battery;
         document.getElementById('valStress').innerText = today.stress_avg || 25;
         document.getElementById('valSteps').innerText = (today.steps || 8400).toLocaleString('de-DE');
       }
 
       const wCont = document.getElementById('workoutsContainer');
-      const workouts = c.workouts || [];
-      wCont.innerHTML = workouts.map(w => `
+      wCont.innerHTML = (c.workouts || []).map(w => `
         <div class="bg-[#111827] border ${w.recommended ? 'border-strava ring-1 ring-orange-500/40' : 'border-slate-800'} rounded-2xl p-4 space-y-2.5">
           <div class="flex justify-between items-center">
             <span class="text-[10px] font-extrabold uppercase tracking-wider ${w.recommended ? 'text-orange-400' : 'text-slate-400'}">${w.badge}</span>
@@ -656,77 +550,59 @@
           <div class="text-sm font-extrabold text-white">${w.title}</div>
           <p class="text-xs text-slate-300 leading-relaxed">${w.desc}</p>
           <div class="flex justify-end items-center pt-2 border-t border-slate-800/80">
-            <button onclick="sendWorkoutToWatch('${w.id}', '${w.title}', 285)" class="bg-strava hover:bg-orange-600 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 transition">
-              ⌚ An Garmin-Uhr senden
-            </button>
+            <button onclick="sendWorkoutToWatch('${w.id}', '${w.title}', 264)" class="bg-strava hover:bg-orange-600 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 transition">⌚ An Garmin-Uhr senden</button>
           </div>
         </div>
       `).join('');
     }
 
-    async function sendWorkoutToWatch(type, title, targetPaceSec = 285) {
+    async function sendWorkoutToWatch(type, title, targetPaceSec = 264) {
       const token = localStorage.getItem('runsync_pat');
       const banner = document.getElementById('statusBanner');
-      banner.firstElementChild.innerText = `⌚ Sende "${title}" an Garmin Connect...`;
-
+      banner.firstElementChild.innerText = `⌚ Sende "${title}" an Garmin...`;
       try {
         const res = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/sync.yml/dispatches`, {
           method: 'POST',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            ref: 'main',
-            inputs: { workout_json: JSON.stringify({ type, title, target_pace_sec: targetPaceSec }) }
-          })
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ref: 'main', inputs: { workout_json: JSON.stringify({ type, title, target_pace_sec: targetPaceSec }) } })
         });
-        if (res.ok) {
-          banner.firstElementChild.innerText = `✅ "${title}" an Garmin-Uhr gesendet! (~25s)`;
-          alert(`Workout "${title}" wird jetzt direkt in deinen Garmin Connect Account übertragen!`);
-        } else {
-          alert('Hinweis: Bitte stelle sicher, dass dein GitHub-Token den Haken bei "workflow" gesetzt hat.');
-        }
+        if (res.ok) alert(`Workout "${title}" wird direkt in dein Garmin Connect Konto übertragen!`);
       } catch (e) {}
     }
 
     async function triggerLiveGarminSync() {
       const token = localStorage.getItem('runsync_pat');
       const banner = document.getElementById('statusBanner');
-      banner.firstElementChild.innerText = '⚡ Starte frischen Garmin-Abruf im Hintergrund (~25s)...';
+      banner.firstElementChild.innerText = '⚡ Starte Garmin-Abruf (~30s)...';
       await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/sync.yml/dispatches`, {
         method: 'POST',
         headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' },
         body: JSON.stringify({ ref: 'main' })
       });
-      setTimeout(loadData, 28000);
+      let sec = 32;
+      const t = setInterval(() => {
+        sec--;
+        if (sec > 0) banner.firstElementChild.innerText = `⏳ Lade Läufe von Garmin... (${sec}s)`;
+        else { clearInterval(t); loadData(); }
+      }, 1000);
     }
 
-    // ==================== ADAPTIVER WETTKAMPF-TRAININGSPLANER ====================
+    // ==================== 3-TAGE PLANER & SPLIT-RECHNER ====================
     function parseTimeToSec(str) {
-      const parts = (str || '44:00').trim().split(':').map(Number);
-      if (parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
-      if (parts.length === 2) return parts[0]*60 + parts[1];
+      const p = (str || '44:00').trim().split(':').map(Number);
+      if (p.length === 2) return p[0]*60 + p[1];
+      if (p.length === 3) return p[0]*3600 + p[1]*60 + p[2];
       return 2640;
     }
-
-    function fmtSecToPace(sec) {
-      return `${Math.floor(sec / 60)}:${String(Math.round(sec % 60)).padStart(2, '0')}`;
-    }
-
-    function togglePlanActive() {
-      saveTrainingPlan();
-    }
+    function fmtSecToPace(sec) { return `${Math.floor(sec / 60)}:${String(Math.round(sec % 60)).padStart(2, '0')}`; }
 
     async function saveTrainingPlan() {
       const plan = {
         active: document.getElementById('planActiveToggle').checked,
-        name: document.getElementById('planEventName').value.trim() || '10 km Stadtlauf',
+        name: document.getElementById('planEventName').value.trim() || '10k Stadtlauf',
         dist: parseFloat(document.getElementById('planDistance').value) || 10,
-        date: document.getElementById('planDate').value,
-        targetTime: document.getElementById('planTargetTime').value.trim() || '44:00',
-        days: parseInt(document.getElementById('planDaysPerWeek').value, 10) || 4
+        date: document.getElementById('planDate').value || new Date(Date.now() + 42*86400000).toISOString().slice(0,10),
+        targetTime: document.getElementById('planTargetTime').value.trim() || '44:00'
       };
       userMeta['_training_plan'] = plan;
       localStorage.setItem('runsync_user_meta', JSON.stringify(userMeta));
@@ -735,36 +611,32 @@
     }
 
     function renderPlanTab() {
-      const defaultDate = new Date(Date.now() + 56 * 86400000).toISOString().slice(0, 10);
-      const plan = userMeta['_training_plan'] || {
-        active: false, name: 'Münchner 10k Lauf', dist: 10, date: defaultDate, targetTime: '44:00', days: 4
-      };
+      const defaultDate = new Date(Date.now() + 42 * 86400000).toISOString().slice(0, 10);
+      const plan = userMeta['_training_plan'] || { active: false, name: 'Stadtlauf 10k', dist: 10, date: defaultDate, targetTime: '44:00' };
 
       document.getElementById('planActiveToggle').checked = !!plan.active;
       document.getElementById('planEventName').value = plan.name;
       document.getElementById('planDistance').value = String(plan.dist);
       document.getElementById('planDate').value = plan.date || defaultDate;
       document.getElementById('planTargetTime').value = plan.targetTime;
-      document.getElementById('planDaysPerWeek').value = String(plan.days || 4);
 
       const banner = document.getElementById('activeEventBanner');
       const secOut = document.getElementById('generatedPlanSection');
 
       const daysLeft = Math.max(0, Math.ceil((new Date(plan.date || defaultDate) - new Date()) / 86400000));
       const weeksLeft = Math.max(1, Math.ceil(daysLeft / 7));
-
       const totalSec = parseTimeToSec(plan.targetTime);
       const targetPaceSec = Math.round(totalSec / plan.dist);
       const targetPaceStr = fmtSecToPace(targetPaceSec);
 
-      let phase = 'Grundlagen- & Aufbau-Phase';
+      let phase = 'Grundlagen & Aufbau (3x/Woche)';
       if (weeksLeft <= 2) phase = 'Tapering & Frische-Phase (Wettkampf-Fokus)';
-      else if (weeksLeft <= 5) phase = 'Spezifische Wettkampf-Zuspitzung (Peak)';
+      else if (weeksLeft <= 4) phase = 'Spezifischer Peak & Tempohärte';
 
       if (plan.active) {
         banner.classList.remove('hidden');
         document.getElementById('bannerEventTitle').innerText = `${plan.name} (${plan.dist} km Ziel: ${plan.targetTime})`;
-        document.getElementById('bannerEventSub').innerText = `${phase} • Ziel-Pace ${targetPaceStr} /km`;
+        document.getElementById('bannerEventSub').innerText = `Phase: ${phase}`;
         document.getElementById('bannerCountdown').innerText = `${daysLeft} Tage`;
       } else {
         banner.classList.add('hidden');
@@ -774,40 +646,40 @@
       document.getElementById('planPhaseBadge').innerText = `${phase} (Noch ${weeksLeft} Wo.)`;
       document.getElementById('planTargetPaceInfo').innerText = `Ziel-Pace: ${targetPaceStr} /km`;
 
-      const readiness = (appData && appData.coach) ? appData.coach.readiness : 82;
-      const adaptNote = document.getElementById('planAdaptationNote');
-      if (readiness < 55) {
-        adaptNote.innerHTML = `⚠️ <b>Live-Adaption aktiv:</b> Da deine heutige Garmin-Readiness niedrig ist (<b>${readiness}/100</b>), wurde die heutige Belastung automatisch gedrosselt!`;
-      } else {
-        adaptNote.innerHTML = `✅ <b>Live-Adaption Grün (Readiness ${readiness}/100):</b> Dein Körper verkraftet die geplanten Reize für dein Ziel <b>${plan.targetTime}</b> optimal.`;
+      // Split-Tabelle generieren
+      const splitCont = document.getElementById('splitTableContainer');
+      let splitHtml = '';
+      for (let i = 1; i <= plan.dist; i++) {
+        const cumulativeSec = Math.round(targetPaceSec * i);
+        const cumMin = `${Math.floor(cumulativeSec/60)}:${String(cumulativeSec%60).padStart(2,'0')}`;
+        splitHtml += `<div class="bg-slate-900 px-2.5 py-1.5 rounded border border-slate-800 flex justify-between"><span class="text-slate-400">Km ${i}:</span><span class="font-bold text-white">${cumMin} (${targetPaceStr})</span></div>`;
       }
+      splitCont.innerHTML = splitHtml;
 
+      const readiness = (appData && appData.coach) ? appData.coach.readiness : 80;
+      document.getElementById('planAdaptationNote').innerHTML = readiness < 55
+        ? `⚠️ <b>Live-Adaption:</b> Readiness liegt bei ${readiness}/100 – heutiges Intervall wurde automatisch auf leichten Zone-2 Dauerlauf gedrosselt.`
+        : `✅ <b>Live-Adaption Grün (${readiness}/100):</b> Dein Körper ist voll bereit für die harten Einheiten zum Ziel <b>${plan.targetTime}</b>.`;
+
+      // 3 flexible Einheiten + Erholungstage
       const schedule = [
-        { day: 'Montag', title: 'Ruhetag / Mobility', desc: 'Aktive Erholung, Blackroll oder 25 Min. Spaziergang', type: 'RECOVERY', run: false },
-        { day: 'Dienstag', title: readiness < 55 ? 'Adaptiert: Lockerer Zone-2 Lauf (statt Intervalle)' : `Schlüsseleinheit: 5x 1.000m @ ${targetPaceStr}/km`, desc: readiness < 55 ? '6 km ruhig @ 6:10/km wegen Erholungsbedarf' : `2 km Einlaufen + 5x 1km im Wettkampftempo (${targetPaceStr}/km) + 1,5 km Auslaufen`, type: readiness < 55 ? 'EASY' : 'QUALITY_1K', run: true },
-        { day: 'Mittwoch', title: plan.days >= 5 ? '6 km Recovery Run' : 'Ruhetag / Cross-Training', desc: plan.days >= 5 ? 'Ganz lockeres Ausschütteln @ 6:15–6:25 min/km' : 'Regeneration für Sehnen & Muskulatur', type: 'RECOVERY', run: plan.days >= 5 },
-        { day: 'Donnerstag', title: '7,5 km Zone-2 Grundlagenlauf', desc: 'Konstante aerobe Pace @ 6:05–6:10 min/km + 4x 80m Strides', type: 'EASY', run: true },
-        { day: 'Freitag', title: 'Ruhetag', desc: 'Erholung vor dem Wochenend-Block', type: 'RECOVERY', run: false },
-        { day: 'Samstag', title: plan.days >= 4 ? `Tempolauf / Cruise Intervals (3x 2km @ ${fmtSecToPace(targetPaceSec+6)})` : 'Optional: 30 Min. Shakeout Jog', desc: plan.days >= 4 ? '2 km Einlaufen + 3x 2.000m an der Schwelle + Auslaufen' : 'Lockere Bewegung', type: plan.days >= 4 ? 'QUALITY_2K' : 'RECOVERY', run: plan.days >= 4 },
-        { day: 'Sonntag', title: weeksLeft <= 1 ? 'Wettkampf-Tag / 6 km Taper' : '12 km Longrun (Zone 2)', desc: 'Grundlagenausdauer bei 6:05–6:12 min/km für maximale Ermüdungsresistenz', type: 'LONGRUN', run: true }
+        { day: 'Einheit 1 (Dienstag / Flexibel)', title: `Schlüssel-Intervall: 5x 1km @ ${targetPaceStr}`, desc: `2 km Einlaufen + 5x 1.000m im Renntempo (${targetPaceStr}/min) + 1,5 km Auslaufen`, type: 'QUALITY_1K', run: true },
+        { day: 'Einheit 2 (Donnerstag / Flexibel)', title: 'Aerober Dauerlauf (Zone 2)', desc: '7,5 bis 9 km entspannter Dauerlauf @ 6:05–6:10 min/km + 4x 80m Steigerungen', type: 'EASY', run: true },
+        { day: 'Einheit 3 (Wochenende / Flexibel)', title: weeksLeft <= 2 ? 'Tapering-Lauf (5 km locker)' : 'Progressiver Longrun (10-12 km)', desc: weeksLeft <= 2 ? 'Kurzer, lockerer Shakeout-Lauf vor dem Event' : 'Konstanter Dauerlauf, letzte 2 km zügig', type: 'LONGRUN', run: true }
       ];
 
-      const todayIdx = (new Date().getDay() + 6) % 7;
-      document.getElementById('weeklyScheduleContainer').innerHTML = schedule.map((s, i) => `
-        <div class="bg-[#111827] border ${i === todayIdx ? 'border-strava ring-1 ring-orange-500/40' : 'border-slate-800'} rounded-2xl p-3.5 flex justify-between items-center gap-3">
+      document.getElementById('weeklyScheduleContainer').innerHTML = schedule.map(s => `
+        <div class="bg-[#111827] border border-slate-800 rounded-2xl p-3.5 flex justify-between items-center gap-3">
           <div class="space-y-1">
-            <div class="flex items-center gap-2">
-              <span class="text-[10px] font-extrabold uppercase ${i === todayIdx ? 'text-orange-400' : 'text-slate-400'}">${s.day} ${i === todayIdx ? '• HEUTE' : ''}</span>
-            </div>
+            <span class="text-[10px] font-extrabold uppercase text-orange-400">${s.day}</span>
             <div class="text-xs font-extrabold text-white">${s.title}</div>
             <div class="text-[11px] text-slate-400 leading-snug">${s.desc}</div>
           </div>
-          ${s.run ? `<button onclick="sendWorkoutToWatch('${s.type}', '${s.title}', ${targetPaceSec})" class="bg-slate-800 hover:bg-strava text-white text-[11px] font-bold px-2.5 py-2 rounded-xl shrink-0 border border-slate-700">⌚ Uhr</button>` : ''}
+          <button onclick="sendWorkoutToWatch('${s.type}', '${s.title}', ${targetPaceSec})" class="bg-slate-800 hover:bg-strava text-white text-[11px] font-bold px-2.5 py-2 rounded-xl shrink-0 border border-slate-700">⌚ Uhr</button>
         </div>
       `).join('');
     }
 
-    // ==================== AKTIVITÄTEN & FILTER ====================
     function setCategoryFilter(cat) {
       currentCategory = cat;
       document.querySelectorAll('.flt-btn').forEach(b => {
@@ -815,51 +687,32 @@
         b.classList.add('bg-[#111827]', 'text-slate-300');
       });
       const active = document.getElementById('flt-' + cat);
-      if (active) {
-        active.classList.add('bg-strava', 'text-white', 'font-bold');
-        active.classList.remove('bg-[#111827]', 'text-slate-300');
-      }
+      if (active) { active.classList.add('bg-strava', 'text-white', 'font-bold'); active.classList.remove('bg-[#111827]', 'text-slate-300'); }
       filterActivities();
     }
 
     function filterActivities() {
       if (!appData || !appData.runs) return;
       const q = (document.getElementById('searchInput').value || '').toLowerCase();
-
       const filtered = appData.runs.filter(r => {
-        const custom = getRunCustom(r);
-        const matchesCat = currentCategory === 'ALL' || r.category === currentCategory;
-        const matchesQuery = !q ||
-          custom.title.toLowerCase().includes(q) ||
-          custom.notes.toLowerCase().includes(q) ||
-          custom.shoe.toLowerCase().includes(q) ||
-          custom.feeling.toLowerCase().includes(q) ||
-          r.date.includes(q);
-        return matchesCat && matchesQuery;
+        const c = getRunCustom(r);
+        return (currentCategory === 'ALL' || r.category === currentCategory) &&
+          (!q || c.title.toLowerCase().includes(q) || c.notes.toLowerCase().includes(q) || c.shoe.toLowerCase().includes(q) || r.date.includes(q));
       });
-
       const cont = document.getElementById('activitiesFeed');
-      if (filtered.length === 0) {
-        cont.innerHTML = `<div class="text-xs text-slate-500 text-center py-8">Keine Läufe gefunden.</div>`;
-        return;
-      }
+      if (filtered.length === 0) { cont.innerHTML = `<div class="text-xs text-slate-500 text-center py-8">Keine Läufe gefunden.</div>`; return; }
 
       cont.innerHTML = filtered.map(r => {
         const key = getRunKey(r);
         const c = getRunCustom(r);
-        const shoeBadge = c.shoe
-          ? `<span class="text-slate-200 font-medium">👟 ${c.shoe}</span>`
-          : `<span class="text-orange-400/90 underline">👟 + Schuh wählen</span>`;
-        const feelBadge = c.feeling
-          ? `<span class="bg-slate-800 text-slate-200 text-[10px] px-2 py-0.5 rounded-full">${c.feeling}${c.rpe ? ' • RPE ' + c.rpe : ''}</span>`
-          : '';
-
+        const shoeBadge = c.shoe ? `<span class="text-slate-200">👟 ${c.shoe}</span>` : `<span class="text-orange-400 underline">👟 + Schuh wählen</span>`;
+        const feelBadge = c.feeling ? `<span class="bg-slate-800 text-slate-200 text-[10px] px-2 py-0.5 rounded-full">${c.feeling}${c.rpe ? ' • RPE ' + c.rpe : ''}</span>` : '';
         return `
           <div onclick="openActivityModal('${key}')" class="bg-[#111827] border border-slate-800 hover:border-orange-500/50 rounded-2xl p-4 space-y-3 cursor-pointer transition">
             <div class="flex justify-between items-start gap-2">
               <div>
-                <div class="flex items-center flex-wrap gap-1.5">
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-orange-500/15 text-orange-400">${r.category || 'Lauf'}</span>
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-orange-500/15 text-orange-400">${r.category}</span>
                   <span class="text-[11px] text-slate-400">${r.date}</span>
                   ${feelBadge}
                 </div>
@@ -868,63 +721,34 @@
               </div>
               <span class="text-xs text-orange-400 font-semibold shrink-0">Details →</span>
             </div>
-
-            <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800/80">
-              <div>
-                <div class="text-[10px] text-slate-400">Distanz</div>
-                <div class="text-base font-black text-white">${r.distance_km} km</div>
-              </div>
-              <div>
-                <div class="text-[10px] text-slate-400">Pace</div>
-                <div class="text-base font-black text-orange-400">${r.pace} /km</div>
-              </div>
-              <div>
-                <div class="text-[10px] text-slate-400">⌀ Puls & Schritt</div>
-                <div class="text-sm font-bold text-slate-200">${r.avg_hr} bpm <span class="text-[10px] text-slate-400">• ${r.stride_m || '1.12'}m</span></div>
-              </div>
+            <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800/80 text-xs">
+              <div><div class="text-[10px] text-slate-400">Distanz</div><div class="text-base font-black text-white">${r.distance_km} km</div></div>
+              <div><div class="text-[10px] text-slate-400">Pace</div><div class="text-base font-black text-orange-400">${r.pace} /km</div></div>
+              <div><div class="text-[10px] text-slate-400">⌀ Puls</div><div class="text-sm font-bold text-slate-200">${r.avg_hr} bpm</div></div>
             </div>
-
             <div class="flex justify-between items-center text-[11px] text-slate-400 pt-1">
-              ${shoeBadge}
-              <span>⚡ TE ${r.aerobic_te || '3.2'} • 🔬 ${r.efficiency || '1.15'} m/♥</span>
+              ${shoeBadge}<span>⚡ TE ${r.aerobic_te}</span>
             </div>
           </div>
         `;
       }).join('');
     }
 
-    function renderActivitiesTab() {
-      filterActivities();
-    }
+    function renderActivitiesTab() { filterActivities(); }
 
     function openActivityModal(runKey) {
       const r = appData.runs.find(x => getRunKey(x) === String(runKey));
       if (!r) return;
-
       currentModalRunId = getRunKey(r);
       const c = getRunCustom(r);
 
       document.getElementById('editPanel').classList.add('hidden');
-      document.getElementById('modCategory').innerText = r.category || 'Lauftraining';
+      document.getElementById('modCategory').innerText = r.category;
       document.getElementById('modTitle').innerText = c.title;
-
-      const feelEl = document.getElementById('modFeelingBadge');
-      if (c.feeling || c.rpe) {
-        feelEl.innerText = `${c.feeling}${c.rpe ? ' • RPE ' + c.rpe + '/10' : ''}`;
-        feelEl.classList.remove('hidden');
-      } else {
-        feelEl.classList.add('hidden');
-      }
-
-      document.getElementById('modMeta').innerText = `${r.date} • 👟 ${c.shoe || 'Noch kein Schuh zugeordnet'}`;
+      document.getElementById('modMeta').innerText = `${r.date} • 👟 ${c.shoe || 'Kein Schuh'}`;
 
       const notesBox = document.getElementById('modNotesBox');
-      if (c.notes) {
-        notesBox.innerText = c.notes;
-        notesBox.classList.remove('hidden');
-      } else {
-        notesBox.classList.add('hidden');
-      }
+      if (c.notes) { notesBox.innerText = c.notes; notesBox.classList.remove('hidden'); } else { notesBox.classList.add('hidden'); }
 
       document.getElementById('editTitleInput').value = c.title;
       document.getElementById('editShoeSelect').value = c.shoe;
@@ -935,34 +759,22 @@
 
       document.getElementById('modDist').innerText = `${r.distance_km} km`;
       document.getElementById('modPace').innerText = `${r.pace} /km`;
-      document.getElementById('modDur').innerText = r.duration_fmt || '--';
-      document.getElementById('modHR').innerText = `${r.avg_hr} / ${r.max_hr || '--'} bpm`;
-      document.getElementById('modCad').innerText = `${r.cadence || 172} spm (${r.stride_m || '1.12'}m)`;
-      document.getElementById('modTE').innerText = `${r.aerobic_te || 3.2} / ${r.anaerobic_te || 0.4}`;
-      document.getElementById('modLoad').innerText = `Load ${r.training_load || 85} • ${r.calories || 480} kcal`;
-      document.getElementById('modEff').innerText = `${r.efficiency || 1.15} m/♥`;
-      document.getElementById('modElev').innerText = `+${r.elev_gain || 0}m / -${r.elev_loss || 0}m`;
+      document.getElementById('modDur').innerText = r.duration_fmt;
+      document.getElementById('modHR').innerText = `${r.avg_hr} / ${r.max_hr} bpm`;
+      document.getElementById('modCad').innerText = `${r.cadence} spm`;
+      document.getElementById('modTE').innerText = `${r.aerobic_te} / ${r.anaerobic_te}`;
 
-      // Splits + Chart.js Kurve
       const splitsCont = document.getElementById('modSplits');
       if (r.splits && r.splits.length > 0) {
-        const minPace = Math.min(...r.splits.map(s => s.pace_sec || 360));
-        const maxPace = Math.max(...r.splits.map(s => s.pace_sec || 360));
-        splitsCont.innerHTML = r.splits.map((s, i) => {
-          const widthPct = maxPace > minPace ? Math.max(35, 100 - Math.round(((s.pace_sec - minPace) / (maxPace - minPace)) * 55)) : 80;
-          return `
-            <div class="grid grid-cols-12 items-center gap-2 py-1 border-b border-slate-800/60">
-              <span class="col-span-3 text-slate-400 font-semibold">Runde ${i+1} <span class="text-[10px]">(${s.km}k)</span></span>
-              <div class="col-span-5 bg-slate-900 rounded-full h-3 overflow-hidden">
-                <div class="bg-sky-400 h-full rounded-full" style="width:${widthPct}%"></div>
-              </div>
-              <span class="col-span-2 font-bold text-white text-right">${s.pace}</span>
-              <span class="col-span-2 text-rose-400 text-right">${s.hr}♥</span>
-            </div>
-          `;
-        }).join('');
+        splitsCont.innerHTML = r.splits.map((s, i) => `
+          <div class="grid grid-cols-12 items-center gap-2 py-1 border-b border-slate-800/60">
+            <span class="col-span-3 text-slate-400">Runde ${i+1}</span>
+            <div class="col-span-5 bg-slate-900 rounded-full h-3 overflow-hidden"><div class="bg-sky-400 h-full rounded-full" style="width:80%"></div></div>
+            <span class="col-span-2 font-bold text-white text-right">${s.pace}</span>
+            <span class="col-span-2 text-rose-400 text-right">${s.hr}♥</span>
+          </div>
+        `).join('');
 
-        // Chart.js Pace & HR Diagramm
         const ctx = document.getElementById('splitsChart').getContext('2d');
         if (splitsChartInstance) splitsChartInstance.destroy();
         splitsChartInstance = new Chart(ctx, {
@@ -970,62 +782,26 @@
           data: {
             labels: r.splits.map((s, i) => `R${i+1}`),
             datasets: [
-              {
-                label: 'Puls (bpm)',
-                data: r.splits.map(s => s.hr),
-                borderColor: '#f43f5e',
-                backgroundColor: 'rgba(244,63,94,0.1)',
-                tension: 0.35,
-                yAxisID: 'y1'
-              },
-              {
-                label: 'Speed (km/h)',
-                data: r.splits.map(s => Math.round((3600 / (s.pace_sec || 360)) * 10) / 10),
-                borderColor: '#38bdf8',
-                backgroundColor: 'rgba(56,189,248,0.15)',
-                fill: true,
-                tension: 0.35,
-                yAxisID: 'y'
-              }
+              { label: 'Puls', data: r.splits.map(s => s.hr), borderColor: '#f43f5e', tension: 0.3, yAxisID: 'y1' },
+              { label: 'Speed', data: r.splits.map(s => Math.round((3600/(s.pace_sec||360))*10)/10), borderColor: '#38bdf8', backgroundColor: 'rgba(56,189,248,0.1)', fill: true, tension: 0.3, yAxisID: 'y' }
             ]
           },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 } } } },
-            scales: {
-              x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { display: false } },
-              y: { position: 'left', ticks: { color: '#38bdf8', font: { size: 10 } }, grid: { color: '#1e293b' } },
-              y1: { position: 'right', ticks: { color: '#f43f5e', font: { size: 10 } }, grid: { display: false } }
-            }
-          }
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { position: 'left', grid: { color: '#1e293b' } }, y1: { position: 'right', grid: { display: false } } } }
         });
-      } else {
-        splitsCont.innerHTML = `<div class="text-slate-500">Keine Runden-Splits vorhanden.</div>`;
-      }
+      } else { splitsCont.innerHTML = `<div class="text-slate-500">Keine Splits.</div>`; }
 
-      // HF-Zonen
-      const zColors = ['#94a3b8', '#38bdf8', '#22c55e', '#f59e0b', '#ef4444'];
       const zonesCont = document.getElementById('modZones');
       if (r.hr_zones && r.hr_zones.length > 0) {
         zonesCont.innerHTML = r.hr_zones.map(z => `
           <div class="space-y-1">
-            <div class="flex justify-between text-[11px]">
-              <span class="font-bold text-slate-200">Zone ${z.zone} <span class="text-slate-500 font-normal">(ab ${z.low_hr || '--'} bpm)</span></span>
-              <span class="text-slate-300 font-semibold">${z.min_fmt} Min. (${z.pct}%)</span>
-            </div>
-            <div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden">
-              <div class="h-full rounded-full" style="width:${Math.max(4, z.pct)}%; background:${zColors[z.zone-1] || '#FC4C02'}"></div>
-            </div>
+            <div class="flex justify-between text-[11px]"><span class="font-bold text-slate-200">Zone ${z.zone}</span><span class="text-slate-300">${z.min_fmt} (${z.pct}%)</span></div>
+            <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden"><div class="h-full bg-orange-500 rounded-full" style="width:${z.pct}%"></div></div>
           </div>
         `).join('');
-      } else {
-        zonesCont.innerHTML = `<div class="text-slate-500">Keine Zonen-Daten geladen.</div>`;
-      }
+      } else { zonesCont.innerHTML = `<div class="text-slate-500">Keine Zonen.</div>`; }
 
       document.getElementById('activityModal').classList.remove('hidden');
 
-      // 🗺️ REPARIERTE DARK-MODE KARTE (OpenStreetMap ohne API-Key!)
       const mapWrap = document.getElementById('modalMapWrapper');
       if (r.polyline && r.polyline.length > 1) {
         mapWrap.classList.remove('hidden');
@@ -1034,49 +810,26 @@
           modalMapInstance = L.map('modalMap', { zoomControl: true, attributionControl: false });
           L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(modalMapInstance);
           const line = L.polyline(r.polyline, { color: '#FC4C02', weight: 4.5 }).addTo(modalMapInstance);
-          // Grüner Start-Pin & Roter Ziel-Pin
-          L.circleMarker(r.polyline[0], { radius: 6, color: '#22c55e', fillColor: '#22c55e', fillOpacity: 1 }).addTo(modalMapInstance);
-          L.circleMarker(r.polyline[r.polyline.length - 1], { radius: 6, color: '#ef4444', fillColor: '#ef4444', fillOpacity: 1 }).addTo(modalMapInstance);
+          L.circleMarker(r.polyline[0], { radius: 5, color: '#22c55e', fillColor: '#22c55e', fillOpacity: 1 }).addTo(modalMapInstance);
+          L.circleMarker(r.polyline[r.polyline.length - 1], { radius: 5, color: '#ef4444', fillColor: '#ef4444', fillOpacity: 1 }).addTo(modalMapInstance);
           modalMapInstance.invalidateSize();
-          modalMapInstance.fitBounds(line.getBounds(), { padding: [18, 18] });
-        }, 200);
-      } else {
-        mapWrap.classList.add('hidden');
-      }
+          modalMapInstance.fitBounds(line.getBounds(), { padding: [15, 15] });
+        }, 150);
+      } else { mapWrap.classList.add('hidden'); }
     }
 
-    function toggleEditPanel() {
-      document.getElementById('editPanel').classList.toggle('hidden');
-    }
-
+    function toggleEditPanel() { document.getElementById('editPanel').classList.toggle('hidden'); }
     function selectFeeling(val) {
       selectedFeeling = (selectedFeeling === val) ? '' : val;
-      document.querySelectorAll('.feel-btn').forEach(btn => {
-        if (btn.getAttribute('data-feel') === selectedFeeling && selectedFeeling !== '') {
-          btn.classList.add('border-strava', 'bg-orange-500/20', 'text-white', 'font-bold');
-          btn.classList.remove('border-slate-800', 'bg-slate-950');
-        } else {
-          btn.classList.remove('border-strava', 'bg-orange-500/20', 'text-white', 'font-bold');
-          btn.classList.add('border-slate-800', 'bg-slate-950');
-        }
+      document.querySelectorAll('.feel-btn').forEach(b => {
+        if (b.getAttribute('data-feel') === selectedFeeling) b.classList.add('border-strava', 'bg-orange-500/20', 'text-white');
+        else b.classList.remove('border-strava', 'bg-orange-500/20', 'text-white');
       });
     }
-
-    function updateRpeLabel(val) {
-      const v = parseInt(val, 10);
-      const lbl = document.getElementById('rpeLabel');
-      if (!v) lbl.innerText = 'Nicht angegeben';
-      else if (v <= 3) lbl.innerText = `${v}/10 • Locker`;
-      else if (v <= 6) lbl.innerText = `${v}/10 • Moderat`;
-      else if (v <= 8) lbl.innerText = `${v}/10 • Anstrengend`;
-      else lbl.innerText = `${v}/10 • Maximal`;
-    }
+    function updateRpeLabel(v) { document.getElementById('rpeLabel').innerText = v; }
 
     async function saveActivityMeta() {
       if (!currentModalRunId) return;
-      const btn = document.getElementById('saveMetaBtn');
-      btn.innerText = '⏳ Speichere...';
-
       userMeta[currentModalRunId] = {
         title: document.getElementById('editTitleInput').value.trim(),
         shoe: document.getElementById('editShoeSelect').value,
@@ -1084,122 +837,63 @@
         rpe: parseInt(document.getElementById('editRpeInput').value, 10) || 0,
         notes: document.getElementById('editNotesInput').value.trim()
       };
-
       localStorage.setItem('runsync_user_meta', JSON.stringify(userMeta));
       await syncUserMetaToCloud();
-
-      btn.innerText = '💾 Änderungen speichern';
       openActivityModal(currentModalRunId);
       renderActivitiesTab();
       renderShoesTab();
     }
 
-    function closeModal() {
-      document.getElementById('activityModal').classList.add('hidden');
-    }
+    function closeModal() { document.getElementById('activityModal').classList.add('hidden'); }
 
     function renderAnalyticsTab() {
       const a = appData.analytics || {};
       const wkKm = a.weekly_km || 0;
-      const goal = a.weekly_goal_km || 35;
       document.getElementById('wkKmVal').innerText = wkKm;
       document.getElementById('monthKmVal').innerText = (a.monthly_km || wkKm) + ' km';
-      document.getElementById('wkRunsCount').innerText = `${a.weekly_runs || 0} Läufe diese Woche`;
-      document.getElementById('wkProgressBar').style.width = `${Math.min(100, Math.round((wkKm / goal) * 100))}%`;
+      document.getElementById('wkRunsCount').innerText = `${a.weekly_runs || 0} Läufe`;
+      document.getElementById('wkProgressBar').style.width = `${Math.min(100, Math.round((wkKm / 30) * 100))}%`;
 
       if (a.records) {
         document.getElementById('rec1k').innerText = a.records.best_1k + ' /km';
         document.getElementById('recFastest').innerText = a.records.fastest_pace + ' /km';
         document.getElementById('recLongest').innerText = a.records.longest_km + ' km';
       }
-
       document.getElementById('anaVo2').innerText = a.vo2max || 53;
-      if (a.predictions) {
-        document.getElementById('pred5k').innerText = a.predictions['5k'];
-        document.getElementById('pred10k').innerText = a.predictions['10k'];
-        document.getElementById('predHm').innerText = a.predictions['hm'];
-      }
 
-      // Aerobe Effizienz Liste
-      const effCont = document.getElementById('efficiencyList');
-      if (appData.runs) {
-        effCont.innerHTML = appData.runs.slice(0, 5).map(r => {
-          const c = getRunCustom(r);
-          return `
-            <div class="flex justify-between items-center bg-slate-900/90 border border-slate-800 px-3 py-2 rounded-xl">
-              <span class="text-slate-200 font-semibold truncate max-w-[160px]">${c.title}</span>
-              <span class="text-slate-400">${r.pace}/km @ ${r.avg_hr}♥</span>
-              <span class="text-teal-400 font-bold">${r.efficiency || '1.15'} m/♥</span>
-            </div>
-          `;
-        }).join('');
-      }
+      document.getElementById('efficiencyList').innerHTML = (appData.runs || []).slice(0, 4).map(r => `
+        <div class="flex justify-between items-center bg-slate-900 px-3 py-2 rounded-xl">
+          <span class="text-slate-200 truncate max-w-[150px]">${r.name}</span>
+          <span class="text-teal-400 font-bold">${r.efficiency || '1.14'} m/♥</span>
+        </div>
+      `).join('');
 
-      const recList = document.getElementById('recoveryTrendList');
-      if (appData.recovery) {
-        recList.innerHTML = [...appData.recovery].reverse().map(d => `
-          <div class="flex justify-between items-center bg-slate-900/90 border border-slate-800 px-3 py-2 rounded-xl">
-            <span class="text-slate-300 font-semibold">${d.date.slice(5)}</span>
-            <span class="text-sky-400">🌙 ${d.sleep_score} (${d.sleep_hours}h)</span>
-            <span class="text-emerald-400">💚 ${d.hrv || 64}ms</span>
-            <span class="text-amber-400">⚡ BB ${d.body_battery}</span>
-            <span class="text-rose-400">❤️ ${d.resting_hr}</span>
-          </div>
-        `).join('');
-      }
+      document.getElementById('recoveryTrendList').innerHTML = [...(appData.recovery || [])].reverse().map(d => `
+        <div class="flex justify-between items-center bg-slate-900 px-3 py-2 rounded-xl text-xs">
+          <span class="text-slate-300 font-semibold">${d.date.slice(5)}</span>
+          <span class="text-sky-400">🌙 ${d.sleep_score}</span>
+          <span class="text-emerald-400">💚 ${d.hrv}ms</span>
+          <span class="text-rose-400">❤️ ${d.resting_hr}</span>
+        </div>
+      `).join('');
     }
 
     function renderShoesTab() {
-      let evoKm = 0;
-      let nbKm = 0;
-      if (appData && appData.runs) {
-        appData.runs.forEach(r => {
-          const c = getRunCustom(r);
-          if (c.shoe === 'Adidas Adizero Evo SL') evoKm += (r.distance_km || 0);
-          if (c.shoe === 'New Balance 1080 v15') nbKm += (r.distance_km || 0);
-        });
-      }
-
-      const shoes = [
-        { id: 'evo_sl', name: 'Adidas Adizero Evo SL', role: 'Intervalle & Tempo', tracked_km: Math.round(evoKm * 10) / 10, max_km: 650, color: '#FC4C02' },
-        { id: 'nb_1080', name: 'New Balance 1080 v15', role: 'Zone 2 & Daily Recovery', tracked_km: Math.round(nbKm * 10) / 10, max_km: 800, color: '#38bdf8' }
-      ];
-
-      const cont = document.getElementById('shoesContainer');
-      cont.innerHTML = shoes.map(s => {
-        const baseKm = parseFloat(localStorage.getItem('shoe_base_' + s.id) || '0');
-        const total = Math.round((s.tracked_km + baseKm) * 10) / 10;
-        const pct = Math.min(100, Math.round((total / s.max_km) * 100));
-        return `
-          <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 space-y-3">
-            <div class="flex justify-between items-start">
-              <div>
-                <div class="text-sm font-extrabold text-white">${s.name}</div>
-                <div class="text-[11px] text-slate-400">${s.role} • Zugeordnet: ${s.tracked_km} km</div>
-              </div>
-              <button onclick="setShoeBase('${s.id}')" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-orange-400 font-semibold px-2.5 py-1 rounded-lg border border-slate-700">
-                ✎ Vor-km eintragen
-              </button>
-            </div>
-            <div class="flex justify-between items-baseline text-xs">
-              <span class="text-xl font-black text-white">${total} km</span>
-              <span class="text-slate-400">von ${s.max_km} km (${pct}%)</span>
-            </div>
-            <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden">
-              <div class="h-full rounded-full" style="width:${pct}%; background:${s.color}"></div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function setShoeBase(id) {
-      const current = localStorage.getItem('shoe_base_' + id) || '0';
-      const val = prompt('Wie viele Vor-Kilometer hatte dieser Schuh schon drauf?', current);
-      if (val !== null && !isNaN(parseFloat(val))) {
-        localStorage.setItem('shoe_base_' + id, Math.max(0, parseFloat(val)).toString());
-        renderShoesTab();
-      }
+      let evoKm = 0, nbKm = 0;
+      (appData?.runs || []).forEach(r => {
+        const c = getRunCustom(r);
+        if (c.shoe === 'Adidas Adizero Evo SL') evoKm += r.distance_km;
+        if (c.shoe === 'New Balance 1080 v15') nbKm += r.distance_km;
+      });
+      document.getElementById('shoesContainer').innerHTML = [
+        { id: 'evo_sl', name: 'Adidas Adizero Evo SL', km: Math.round(evoKm*10)/10, max: 650, color: '#FC4C02' },
+        { id: 'nb_1080', name: 'New Balance 1080 v15', km: Math.round(nbKm*10)/10, max: 800, color: '#38bdf8' }
+      ].map(s => `
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+          <div class="flex justify-between text-sm font-extrabold text-white"><span>${s.name}</span><span>${s.km} / ${s.max} km</span></div>
+          <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${Math.min(100, Math.round((s.km/s.max)*100))}%; background:${s.color}"></div></div>
+        </div>
+      `).join('');
     }
 
     window.addEventListener('DOMContentLoaded', loadData);
